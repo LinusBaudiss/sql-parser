@@ -1,5 +1,8 @@
 package de.linus.sqlparser.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,14 +10,12 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Queries {
 
 	private DatabaseConnection db;
 	private Connection con;
-	private static final Logger LOGGER = Logger.getLogger("Queries");
+	private static final Logger LOGGER = LoggerFactory.getLogger(Queries.class);
 	private static final String SQLEXPMSG = "A wild SQLException occured, while performing the following statement: ";
 
 	public Queries(String url, String user, String pw) {
@@ -22,7 +23,7 @@ public class Queries {
 			db = new DatabaseConnection(url, user, pw);
 			con = db.getConnection();
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, "A wild SQLException occured, while connecting to the database");
+			LOGGER.error("A wild SQLException occured, while connecting to the database");
 		}
 	}
 
@@ -30,7 +31,7 @@ public class Queries {
 		try (PreparedStatement pstmt = con.prepareStatement(statement)) {
 			pstmt.execute();
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, SQLEXPMSG + statement);
+			LOGGER.error(SQLEXPMSG + statement);
 			return false;
 		}
 		return true;
@@ -87,7 +88,7 @@ public class Queries {
 				}
 			}
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, SQLEXPMSG + statement);
+			LOGGER.error(SQLEXPMSG + statement);
 		}
 		return list;
 	}
@@ -96,7 +97,7 @@ public class Queries {
 		try (PreparedStatement pstmt = con.prepareStatement(statement)) {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, SQLEXPMSG + statement);
+			LOGGER.error(SQLEXPMSG + statement);
 			return false;
 		}
 		return true;

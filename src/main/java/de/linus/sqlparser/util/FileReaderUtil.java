@@ -1,5 +1,8 @@
 package de.linus.sqlparser.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -8,13 +11,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class FileReaderUtil {
 
 	private String filepath;
-	private static final Logger LOGGER = Logger.getLogger("FileReaderUtil");
+	private static final Logger LOGGER = LoggerFactory.getLogger(FileReaderUtil.class);
+
 	private String ioexcmsg = "A wild IOException occured, while reading the following file: ";
 	private String ioobexcmsg = "A wild IndexOutOfBoundsException occured while checking if the following line is a comment: ";
 
@@ -35,7 +37,7 @@ public class FileReaderUtil {
 				}
 			}
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, ioexcmsg + filepath, e);
+			LOGGER.error(ioexcmsg + filepath, e);
 		}
 		return content.toString();
 	}
@@ -49,7 +51,7 @@ public class FileReaderUtil {
 				content.add(line);
 			}
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, ioexcmsg + filepath);
+			LOGGER.error(ioexcmsg + filepath);
 		}
 		return content;
 	}
@@ -64,7 +66,7 @@ public class FileReaderUtil {
 				return true;
 			}
 		} catch (IndexOutOfBoundsException e) {
-			LOGGER.log(Level.SEVERE, ioobexcmsg + line);
+			LOGGER.error(ioobexcmsg + line);
 		}
 		return false;
 	}
