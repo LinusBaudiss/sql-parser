@@ -24,7 +24,9 @@ public class SqlparserApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		long startTime = System.currentTimeMillis();
+		try
+		{
+			long startTime = System.currentTimeMillis();
 
 		//Auslesen der Input Datei -> Erstellung eines Datenobjektes
 		InputFileDto inputFileDto = new InputHandler(args[0]).createInputFileDto();
@@ -52,5 +54,9 @@ public class SqlparserApplication implements CommandLineRunner {
 		long endTime = System.currentTimeMillis();
 		long runTime = endTime - startTime;
 		System.out.println("Runtime: " + runTime + "ms");
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			System.out.println("Geben Sie den Filepath zum Inputfile an!");
+		}
 	}
 }
