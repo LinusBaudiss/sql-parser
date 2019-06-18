@@ -10,12 +10,12 @@
 	</parent>
 	<groupId>de.linus.sqlparser</groupId>
 	<artifactId>sqlparser</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>sqlparser</name>
 	<description>Parser for SQL Statements</description>
 
 	<properties>
-		<java.version>12</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 
 	<dependencies>

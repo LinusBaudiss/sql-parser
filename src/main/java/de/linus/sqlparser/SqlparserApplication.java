@@ -31,7 +31,6 @@ public class SqlparserApplication implements CommandLineRunner {
             //Auslesen der Input Datei -> Erstellung eines Datenobjektes
             InputFileDto inputFileDto = new InputHandler(args[0]).createInputFileDto();
 
-
             //Auslesen des DB Pfades
             String dbUrl = new DBConnectionStringParser().getDBConnectionURL(inputFileDto.getDb());
 
