@@ -1,10 +1,10 @@
 package de.linus.sqlparser;
 
+import de.linus.sqlparser.config.ParserConfig;
 import de.linus.sqlparser.dao.Queries;
-import de.linus.sqlparser.handler.InputHandler;
 import de.linus.sqlparser.handler.SQLFileHandler;
-import de.linus.sqlparser.model.InputFileDto;
-import de.linus.sqlparser.parser.DBConnectionStringParser;
+import de.linus.sqlparser.mapper.JsonMapper;
+import de.linus.sqlparser.util.DBConnectionStringUtil;
 import de.linus.sqlparser.util.FileManipulatorUtil;
 import de.linus.sqlparser.util.FileWriterUtil;
 import org.slf4j.Logger;
@@ -27,35 +27,32 @@ public class SqlparserApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         long startTime = System.currentTimeMillis();
-        try {
-            //Auslesen der Input Datei -> Erstellung eines Datenobjektes
-            InputFileDto inputFileDto = new InputHandler(args[0]).createInputFileDto();
 
-            //Auslesen des DB Pfades
-            String dbUrl = new DBConnectionStringParser().getDBConnectionURL(inputFileDto.getDb());
+        //Auslesen der Input Datei -> Erstellung eines Datenobjektes
+        ParserConfig parserConfig = new JsonMapper().mapParserConfig("input.json");
 
-            //Herstellen der DB Verbindung
-            Queries queries = new Queries(dbUrl, inputFileDto.getDb().getDbuser(), inputFileDto.getDb().getDbpassword());
+        //Auslesen des DB Pfades
+        String dbUrl = new DBConnectionStringUtil().getDBConnectionURL(parserConfig.getDb_type(), parserConfig.getDb_path());
 
-            //Liste der SQL Dateienpfade
-            List<String> SQLFiles = inputFileDto.getSql().getSqlfilepaths();
+        //Herstellen der DB Verbindung
+        Queries queries = new Queries(dbUrl, parserConfig.getDb_user(), parserConfig.getDb_password());
 
-            //Erstellen eines Filewriters für die Output Datei
-            FileWriterUtil outputWriter = new FileWriterUtil(inputFileDto.getOut().getOutputfilepath());
-            outputWriter.writeFile("", false);
+        //Liste der SQL Dateienpfade
+        List<String> SQLFiles = parserConfig.getSqlfiles();
 
-            //Verarbeitung der SQL Dateien
-            new SQLFileHandler(queries, SQLFiles, outputWriter).processSQLFiles();
+        //Erstellen eines Filewriters für die Output Datei
+        FileWriterUtil outputWriter = new FileWriterUtil(parserConfig.getOutput_filepath());
+        outputWriter.writeFile("", false);
 
-            //Löschen der letzten Zeilen in der Output Datei
-            new FileManipulatorUtil(inputFileDto.getOut().getOutputfilepath()).deleteEndLine();
-        } catch (IndexOutOfBoundsException e) {
-            logger.error("Eingabe eines Dateipfades zur Inputdatei notwendig!");
-        }
+        //Verarbeitung der SQL Dateien
+        new SQLFileHandler(queries, SQLFiles, outputWriter).processSQLFiles();
+
+        //Löschen der letzten Zeilen in der Output Datei
+        new FileManipulatorUtil(parserConfig.getOutput_filepath()).deleteEndLine();
 
         //Runtime Messung
         long endTime = System.currentTimeMillis();
         long runTime = endTime - startTime;
-        System.out.println("Runtime: " + runTime + "ms");
+        logger.info("Runtime: " + runTime + "ms");
     }
 }

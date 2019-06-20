@@ -1,0 +1,12 @@
+{
+    "db_type": "h2",
+    "db_path": "/home/linus/git/fibu_db/db/FIBU",
+    "db_user": "Linus",
+    "db_password": "F1nanzbuchh@ltung",
+    "output_filepath": "output",
+    "log_filepath": "log",
+    "sqlfiles": [
+        "/home/linus/git/fibu_db/sqlscripts/truncatetable.sql",
+        "/home/linus/git/fibu_db/sqlscripts/insertdata.sql"
+    ]
+}
