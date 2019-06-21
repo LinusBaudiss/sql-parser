@@ -1,7 +1,5 @@
 package de.linus.sqlparser.util;
 
-import de.linus.sqlparser.config.ParserConfig;
-
 public class DBConnectionStringUtil {
 
 	public String getDBConnectionURL(String db_type, String db_path) {
