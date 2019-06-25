@@ -1,15 +1,12 @@
 {
     "db_type": "h2",
-    "db_path": "/home/linus/datenbanken/logbuch/db/DIVE",
+    "db_path": "/home/linus/git/datenbanken/fibu_db/db/FIBU",
     "db_user": "Linus",
-    "db_password": "L0gbuch",
+    "db_password": "F1nanzbuchh@ltung",
     "output_filepath": "output",
     "log_filepath": "log",
     "sqlfiles": [
-        "/home/linus/datenbanken/logbuch/sqlscripts/droptable.sql",
-        "/home/linus/datenbanken/logbuch/sqlscripts/dropschema.sql",
-        "/home/linus/datenbanken/logbuch/sqlscripts/createschema.sql",
-        "/home/linus/datenbanken/logbuch/sqlscripts/createtable.sql",
-        "/home/linus/datenbanken/logbuch/sqlscripts/insertdata.sql"
+        "/home/linus/git/datenbanken/fibu_db/sqlscripts/truncatetable.sql",
+        "/home/linus/git/datenbanken/fibu_db/sqlscripts/insertdata.sql"
     ]
 }
