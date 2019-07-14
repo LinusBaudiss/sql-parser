@@ -30,3 +30,6 @@ HELP.md
 
 ### MAVEN ###
 .mvn/
+
+### Manually added files ###
+/testfiles

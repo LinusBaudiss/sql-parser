@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>de.linus.sqlparser</groupId>
 	<artifactId>sqlparser</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>sqlparser</name>
 	<description>Parser for SQL Statements</description>
 
@@ -35,6 +35,12 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.199</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.9</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -42,7 +48,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 
